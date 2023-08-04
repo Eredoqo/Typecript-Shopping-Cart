@@ -1,5 +1,5 @@
-import { Stack } from "react-bootstrap";
-//import { useShoppingCart } from "../context/ShoppingCartContext";
+import { Button, Stack } from "react-bootstrap";
+import { useShoppingCart } from "../context/ShoppingCartContext";
 import storeItems from "./../data/item.json";
 import { formatCurrency } from "../utils/formatCurrency";
 
@@ -9,7 +9,7 @@ type CartItemProps = {
 };
 
 export function CartItem({ id, quantity }: CartItemProps) {
-  //const { removeFromCart } = useShoppingCart();
+  const { removeFromCart } = useShoppingCart();
   const item = storeItems.find((i) => i.id === id);
   if (item == null) return null;
 
@@ -32,6 +32,14 @@ export function CartItem({ id, quantity }: CartItemProps) {
           {formatCurrency(item.price)}
         </div>
       </div>
+      <div>{formatCurrency(item.price * quantity)}</div>
+      <Button
+        variant="outline-danger"
+        size="sm"
+        onClick={() => removeFromCart(item.id)}
+      >
+        &times;
+      </Button>
     </Stack>
   );
 }
